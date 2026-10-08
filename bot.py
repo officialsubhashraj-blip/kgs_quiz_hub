@@ -2,8 +2,8 @@ import telebot
 from flask import Flask
 import threading
 
-# Apna Bot Token yahan dalein
-BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'
+# Aapka Bot Token yahan add kar diya gaya hai
+BOT_TOKEN = '8366997355:AAEwVC00JMa5YolkLKUeKkE4S-LjpiN8AHs'
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # User ka data temporary save rakhne ke liye dabba
