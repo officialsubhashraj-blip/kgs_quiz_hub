@@ -3,7 +3,7 @@ from flask import Flask
 import threading
 
 # Yahan BotFather wala token dalein
-BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE' 
+BOT_TOKEN = '8366997355:AAEwVC00JMa5YolkLKUeKkE4S-LjpiN8AHs' 
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # Yeh Flask server cloud hosting ko batayega ki app chal rahi hai
