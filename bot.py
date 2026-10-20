@@ -3,7 +3,7 @@ from telegram.ext import Application, MessageHandler, CommandHandler, filters, C
 from keep_alive import keep_alive
 
 # YAHAN APNA TOKEN AUR ID DALEIN (Jo aapne pehle dala tha)
-BOT_TOKEN = "8815403425:AAGCqdCXSK0vc8XJwPkxtbMBiBnV_SR_UNA"
+BOT_TOKEN = "8815403425:AAFB57wfLZWVmbIQ1MPjjDHjp5lqsvQ1YXU"
 ADMIN_ID = 7664016879
 
 tracker = {}
