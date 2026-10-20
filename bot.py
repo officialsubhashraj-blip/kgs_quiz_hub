@@ -3,7 +3,7 @@ from telegram.ext import Application, MessageHandler, CommandHandler, filters, C
 from keep_alive import keep_alive
 
 # Aapki details yahan add kar di gayi hain
-BOT_TOKEN = "8916607366:AAF2vSYcEOAgJg0phP9VdkB3tclmkvuaM5U"
+BOT_TOKEN = "8815403425:AAGCqdCXSK0vc8XJwPkxtbMBiBnV_SR_UNA"
 ADMIN_ID = 7664016879
 
 tracker = {}
