@@ -2,11 +2,15 @@ from telegram import Update
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, ContextTypes
 from keep_alive import keep_alive
 
-# Aapki details yahan add kar di gayi hain
+# YAHAN APNA TOKEN AUR ID DALEIN (Jo aapne pehle dala tha)
 BOT_TOKEN = "8815403425:AAGCqdCXSK0vc8XJwPkxtbMBiBnV_SR_UNA"
 ADMIN_ID = 7664016879
 
 tracker = {}
+
+# Naya Start Command Function
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("✅ Hello! Main 24/7 Group Monitor Bot hoon. Mujhe apne group mein add karein aur Admin banayein taaki main members ko track kar saku.\n\nData dekhne ke liye /stats type karein.")
 
 async def track_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.new_chat_members:
@@ -20,7 +24,6 @@ async def track_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def show_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     
-    # Check karega ki command aapne hi di hai
     if user_id == ADMIN_ID:
         if not tracker:
             await update.message.reply_text("Abhi tak kisi ne koi naya member add nahi kiya hai.")
@@ -36,11 +39,13 @@ async def show_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🚫 Aapko ye command use karne ki permission nahi hai.")
 
 def main():
-    keep_alive() # Yeh server start karega
+    keep_alive() 
     app = Application.builder().token(BOT_TOKEN).build()
     
-    app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_members))
+    # Handlers
+    app.add_handler(CommandHandler("start", start)) # Start command add kar diya gaya hai
     app.add_handler(CommandHandler("stats", show_stats))
+    app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_members))
     
     print("Bot chalu ho gaya hai...")
     app.run_polling()
