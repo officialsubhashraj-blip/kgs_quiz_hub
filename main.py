@@ -13,8 +13,8 @@ from telegram.ext import (
     ContextTypes,
 )
 
-TOKEN = os.environ["8299633752:AAGaanGnfMtr16fX0H6Za0ieL_Xua3NCTGA"]
-GROUP_ID = int(os.environ["1003994741642"])
+TOKEN = os.environ["BOT_TOKEN"]
+GROUP_ID = int(os.environ["GROUP_ID"])
 DB_PATH = os.environ.get("DB_PATH", "invites.db")
 REQUIRED = 2
 
