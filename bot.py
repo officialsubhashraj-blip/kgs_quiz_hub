@@ -2,8 +2,8 @@ from telegram import Update, ChatPermissions
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, ContextTypes
 from keep_alive import keep_alive
 
-# Yahan apna Token aur ID dalein
-BOT_TOKEN = "8846698403:AAHtYNMiEsTwzTQssVDO5x4RL0tOxqX4kbE"
+# Yahan apna Naya Token aur ID dalein
+BOT_TOKEN = "8846698403:AAHz8LOO1nU9XzyQsyfhqkOHbQJdOUoFIlM"
 ADMIN_ID = 7664016879
 
 # Kitne members add karne par chat khulegi
@@ -18,25 +18,21 @@ async def track_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.message.chat_id
     
     if update.message.new_chat_members:
-        adder = update.message.from_user # Jisne add kiya hai
+        adder = update.message.from_user 
         
         for new_member in update.message.new_chat_members:
-            # Agar bot add hua hai toh usko ignore karein
             if new_member.is_bot:
                 continue
                 
             # Agar kisi ne direct kisi aur ko add kiya hai
             if new_member.id != adder.id:
-                # Adder ka score badhayein
                 tracker[adder.id] = tracker.get(adder.id, 0) + 1
                 context.bot_data[adder.id] = adder.first_name
-                
                 total_added = tracker[adder.id]
                 
-                # Check karein ki kya usne 3 members pure kar liye
                 if total_added >= REQUIRED_ADDS:
+                    # Unmute karne ki koshish
                     try:
-                        # User ko Unmute (Chat allow) karein
                         await context.bot.restrict_chat_member(
                             chat_id=chat_id,
                             user_id=adder.id,
@@ -47,23 +43,28 @@ async def track_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                 can_add_web_page_previews=True
                             )
                         )
-                        await update.message.reply_text(f"🎉 **{adder.first_name}** ne {REQUIRED_ADDS} members add kar diye hain!\n🔓 Ab inka chat unlock ho gaya hai.", parse_mode='Markdown')
-                    except Exception:
-                        pass # Agar user already admin hai toh error ignore karega
+                    except Exception as e:
+                        print(f"Unmute Error: {e}") # Error Render par dikhega
+                        
+                    # Message hamesha bhejega
+                    await update.message.reply_text(f"🎉 **{adder.first_name}** ne {REQUIRED_ADDS} members add kar diye hain!\n🔓 Ab inka chat unlock ho gaya hai.", parse_mode='Markdown')
+                
                 else:
                     bach_gaye = REQUIRED_ADDS - total_added
                     await update.message.reply_text(f"👍 **{adder.first_name}** ne **{new_member.first_name}** ko add kiya.\n🔒 Chat unlock karne ke liye abhi {bach_gaye} aur members add karne honge.", parse_mode='Markdown')
 
-            # Naya aane wala member (chahe link se aaye ya koi add kare), usko Mute karein
+            # Naya aane wala member, usko Mute karne ki koshish
             try:
                 await context.bot.restrict_chat_member(
                     chat_id=chat_id,
                     user_id=new_member.id,
                     permissions=ChatPermissions(can_send_messages=False)
                 )
-                await update.message.reply_text(f"🛑 Welcome **{new_member.first_name}**!\n\nAap abhi group mein message nahi bhej sakte. Chat unlock karne ke liye aapko group mein **{REQUIRED_ADDS} naye members** ko add karna hoga.", parse_mode='Markdown')
-            except Exception:
-                pass # Agar join hone wala admin hai, toh use mute nahi karega
+            except Exception as e:
+                print(f"Mute Error: {e}") # Error Render par dikhega
+                
+            # Message hamesha bhejega
+            await update.message.reply_text(f"🛑 Welcome **{new_member.first_name}**!\n\nAap abhi group mein message nahi bhej sakte. Chat unlock karne ke liye aapko group mein **{REQUIRED_ADDS} naye members** ko add karna hoga.", parse_mode='Markdown')
 
 async def show_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
