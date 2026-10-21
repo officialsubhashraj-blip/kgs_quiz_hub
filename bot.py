@@ -51,8 +51,8 @@ async def track_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     except Exception:
                         pass # Agar user already admin hai toh error ignore karega
                 else:
-                    bach gaye = REQUIRED_ADDS - total_added
-                    await update.message.reply_text(f"👍 **{adder.first_name}** ne **{new_member.first_name}** ko add kiya.\n🔒 Chat unlock karne ke liye abhi {bach gaye} aur members add karne honge.", parse_mode='Markdown')
+                    bach_gaye = REQUIRED_ADDS - total_added
+                    await update.message.reply_text(f"👍 **{adder.first_name}** ne **{new_member.first_name}** ko add kiya.\n🔒 Chat unlock karne ke liye abhi {bach_gaye} aur members add karne honge.", parse_mode='Markdown')
 
             # Naya aane wala member (chahe link se aaye ya koi add kare), usko Mute karein
             try:
